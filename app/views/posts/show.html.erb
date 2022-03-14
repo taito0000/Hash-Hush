@@ -1,0 +1,56 @@
+<h1>投稿詳細・コメント</h1>
+<div>
+  <p>ユーザーネーム：<%= @post.user.nickname %></p>
+  <p>本文：<%= @post.body %></p>
+  <%= attachment_image_tag @post, :image, size: "100x100" %></br>
+  <p>投稿日時：<%= @post.created_at.strftime('%Y/%m/%d') %></p>
+  <% if @post.user == current_user %>
+    <%= link_to "削除", post_path(@post), method: :delete %>
+  <% end %>
+</div>
+
+<div>
+  <% if @post.favorited_by?(current_user) %>
+    <p>
+      <%= link_to post_favorites_path(@post), method: :delete do %>
+        ♥<%= @post.favorites.count %>
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= link_to post_favorites_path(@post), method: :post do %>
+        ♡<%= @post.favorites.count %> 
+      <% end %>
+    </p>
+  <% end %>
+  <p>コメント件数：<%= @post.comments.count %></p>
+  <% @post.comments.each do |comment| %>
+    <div>
+      <%= comment.user.name %>
+      <%= comment.created_at.strftime('%Y/%m/%d') %></br>
+      <%= comment.body %>
+      <% if comment.user == current_user %>
+        <div>
+          <%= link_to "削除", post_comment_path(comment.post, comment), method: :delete %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+<div>
+  <%= form_with(model:[@post, @comment], local: true) do |f| %>
+    <%= f.text_area :body, rows:'5',placeholder: "コメントをここに" %>
+    <%= f.submit "送信する" %>
+  <% end %>
+</div>
+<% @hashtags.each do |hashtag| %>
+  <%= link_to hashtag_path(hashtag.name) do %>
+    <%= hashtag.name %>
+  <% end %>
+<%end%>
+
+<% current_user.hashtags.each do |hashtag| %> <!--フォローしてるハッシュタグ一覧-->
+  <% if current_user.followed?(hashtag) %>
+    <%= link_to "#フォロー解除#{hashtag.name}", follow_hashtag_path(hashtag), method: :delete %>　<!--ハッシュタグのフォロー解除-->
+  <%end %>
+<%end%>

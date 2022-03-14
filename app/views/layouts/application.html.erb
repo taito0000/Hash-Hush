@@ -9,6 +9,79 @@
   </head>
 
   <body>
-    <%= yield %>
+    <heder class="header">
+      <div class="container">
+         <nav class="navbar">
+          <div class="container">
+            <div>
+              <h2>Hash hush</h2>
+            </div>
+            <% if user_signed_in? %>
+            <div class="user_icon">
+              <%= link_to user_path(current_user) do %>
+                <%= attachment_image_tag current_user, :profile_image, size: "25x25", format: 'jpeg', fallback: "no_imagesan.png" %><%= current_user.nickname %>
+              <% end %>
+            </div>
+            <div class"post_btn">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" >
+                +
+              </button>
+              
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">なんの話する？</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <%= form_with model: Post.new, local:true do |f| %>
+                      <div class="modal-body">
+                        <h4>ハッシュタグ</h4>
+                        <%= f.text_field :hashbody %>
+                        <h4>本文</h4>
+                        <%= f.text_field :body, size:"55x3" %>
+                        <h4>画像</h4>
+                        <%= f.attachment_field :image %>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">投稿する</button>
+                      </div>
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <% end %>
+            <div>
+              <div class="search-form">
+                <%= form_with url: search_path, method: :get, local: true do |f| %>
+                  <%= f.text_field :keyword %>
+                  <%= f.submit "検索" %>
+                <% end %>
+              </div>
+            </div>
+            <div>
+              <% if user_signed_in? %>
+                <p>
+                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+                </p>
+              <% else %>
+                <p>
+                  <%= link_to "新規登録", new_user_registration_path %>　<%= link_to "ログイン", new_user_session_path %>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </heder>
+    <main class="container">
+      <%= yield %>
+    </main>
   </body>
 </html>
