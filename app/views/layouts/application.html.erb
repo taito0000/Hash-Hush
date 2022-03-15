@@ -11,65 +11,64 @@
   <body>
     <heder class="header">
       <div class="container">
-         <nav class="navbar">
+        <nav class="navbar">
           <div class="container">
-            <div>
-              <h2>Hash hush</h2>
+            <div class="navbar-brand logo">
+              <span class="logo-icon"><%= image_tag'logobean.png', size: '60x60' %></span>
+              <span class="logo-name"><h2>Hash hush</h2></span>
             </div>
-            <% if user_signed_in? %>
-            <div class="user_icon">
-              <%= link_to user_path(current_user) do %>
-                <%= attachment_image_tag current_user, :profile_image, size: "25x25", format: 'jpeg', fallback: "no_imagesan.png" %><%= current_user.nickname %>
-              <% end %>
-            </div>
-            <div class"post_btn">
-              <!-- Button trigger modal -->
-              <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" >
-                +
-              </button>
-              
-              <!-- Modal -->
-              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">なんの話する？</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+            <div class="navbar-items">
+              <% if user_signed_in? %>
+                <div class="search-form">
+                  <%= form_with url: search_path, method: :get, local: true do |f| %>
+                    <%= f.text_field :keyword %>
+                    <%= f.submit "検索" %>
+                  <% end %>
+                </div>
+                <div class="post-btn">
+                  <!-- Button trigger modal -->
+                  <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" >
+                    +
+                  </button>
+                  
+                  <!-- Modal -->
+                  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">なんの話する？</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <%= form_with model: Post.new, local:true do |f| %>
+                          <div class="modal-body">
+                            <h4>ハッシュタグ</h4>
+                            <%= f.text_field :hashbody %>
+                            <h4>本文</h4>
+                            <%= f.text_field :body, size:"55x3" %>
+                            <h4>画像</h4>
+                            <%= f.attachment_field :image %>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">投稿する</button>
+                          </div>
+                        <% end %>
+                      </div>
                     </div>
-                    <%= form_with model: Post.new, local:true do |f| %>
-                      <div class="modal-body">
-                        <h4>ハッシュタグ</h4>
-                        <%= f.text_field :hashbody %>
-                        <h4>本文</h4>
-                        <%= f.text_field :body, size:"55x3" %>
-                        <h4>画像</h4>
-                        <%= f.attachment_field :image %>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">投稿する</button>
-                      </div>
-                    <% end %>
                   </div>
                 </div>
-              </div>
-            </div>
-            <% end %>
-            <div>
-              <div class="search-form">
-                <%= form_with url: search_path, method: :get, local: true do |f| %>
-                  <%= f.text_field :keyword %>
-                  <%= f.submit "検索" %>
-                <% end %>
-              </div>
-            </div>
-            <div>
-              <% if user_signed_in? %>
-                <p>
-                  <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-                </p>
+                <div class="dropdown">
+                  <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <%= attachment_image_tag current_user, :profile_image, size: "30x30", format: 'jpeg', fallback: "no_imagesan.png" %><%= current_user.nickname %>
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#"><%= link_to "マイページ", user_path(current_user) %></a>
+                    <a class="dropdown-item" href="#"><%= link_to "プロフィール編集", edit_user_path(current_user) %></a>
+                    <a class="dropdown-item" href="#"><%= link_to "ログアウト", destroy_user_session_path, method: :delete %></a>
+                  </div>
+                </div>
               <% else %>
                 <p>
                   <%= link_to "新規登録", new_user_registration_path %>　<%= link_to "ログイン", new_user_session_path %>
@@ -80,8 +79,10 @@
         </nav>
       </div>
     </heder>
-    <main class="container">
-      <%= yield %>
+    <main>
+      <div class="container">
+        <%= yield %>
+      </div>
     </main>
   </body>
 </html>

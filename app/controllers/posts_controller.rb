@@ -8,11 +8,11 @@ class PostsController < ApplicationController
       @new_post = Post.new(post_params)
       @new_post.user_id = current_user.id
       @new_post.save
-      redirect_to posts_path
+      redirect_to post_path(@new_post.id)
     end
     
     def index
-      @posts = Post.joins(:post_hashtags).where(post_hashtags: {hashtag_id: current_user.hashtags.ids}).uniq
+      @posts = Post.joins(:post_hashtags).where(post_hashtags: {hashtag_id: current_user.hashtags.ids}).uniq.order(created_at: :desc)
     end
     
     def show
@@ -22,7 +22,7 @@ class PostsController < ApplicationController
     end
     
     def hashtag
-      @posts = Hashtag.find_by(name: params[:tag]).posts
+      @posts = Hashtag.find_by(name: params[:tag]).posts.order(created_at: :desc)
       @hashtag = Hashtag.find_by(name: params[:tag])
     end
     

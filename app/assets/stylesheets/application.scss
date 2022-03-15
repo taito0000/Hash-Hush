@@ -26,3 +26,53 @@
   display: flex;
   background-color: #eeeeee;
 }
+
+.navbar {
+  position: relative;
+}
+
+.logo-name {
+  position: absolute;
+	bottom: 0;
+}
+
+.navbar-items {
+  display: flex;
+}
+
+.search-form {
+  margin: 15px;
+}
+
+.post-btn {
+  margin: 15px;
+}
+
+.dropdown {
+  margin: 15px;
+}
+
+.user-icon {
+  padding-left: 60px;
+}
+
+.user-name {
+  position: absolute;
+  bottom: 0;
+  padding: 7px;
+	font-size: 20px;
+}
+
+.post-item {
+  margin-top: 20px;
+  border: solid 1px #C0C0C0;
+}
+
+.post-hashtags {
+  background-color: #EEEEEE;
+  text-align: center;
+}
+
+.reactions {
+  display: flex;
+}
