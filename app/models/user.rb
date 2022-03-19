@@ -7,8 +7,8 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
-  has_many :follow_hashtags, dependent: :destroy
-  has_many :hashtags, through: :follow_hashtags
+  has_many :follow_tags, dependent: :destroy
+  has_many :tags, through: :follow_tags
   attachment :profile_image
          
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -22,8 +22,8 @@ class User < ApplicationRecord
   
   
   
-  def followed?(hashtag)
-    hashtags.where(id: hashtag.id).exists?
+  def followed?(tag)
+    tags.where(id: tag.id).exists?
   end
  
 end

@@ -1,21 +1,24 @@
 class Post < ApplicationRecord
-    belongs_to :user
-    has_many :post_hashtags, dependent: :destroy
-    has_many :hashtags, through: :post_hashtags
-    has_many :comments, dependent: :destroy
-    has_many :favorites, dependent: :destroy
-    
-    def favorited_by?(user)
-      favorites.where(user_id: user.id).exists?
-    end
-    attachment :image
-    
-    after_create do
-      post = Post.find_by(id: id)
-      hashtags = hashbody.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
-      hashtags.uniq.map do |hashtag|
-        tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#'))
-        post.hashtags << tag
+  belongs_to :user
+  has_many :post_tags, dependent: :destroy
+  has_many :tags, through: :post_tags
+  has_many :comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  
+  def favorited_by?(user)
+    favorites.where(user_id: user.id).exists?
+  end
+  attachment :image
+  
+  def save_tags(tag_list)
+    tag_list.each do |tag|
+      target_tag = Tag.find_by(name:tag)
+      if  target_tag
+        PostTag.create!({post_id:self.id,tag_id:target_tag.id})
+      else
+        created_tag = Tag.create!(name:tag)
+        PostTag.create!({post_id:self.id,tag_id:created_tag.id})
       end
     end
+  end
 end

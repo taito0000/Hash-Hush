@@ -3,13 +3,13 @@ Rails.application.routes.draw do
   root to: 'homes#top'
   devise_for :users
   get 'home' => "posts#index"
-  post "hashtags/:id/follow_hashtags" => "follow_hashtags#create", as: "follow_hashtags"
-  delete "hashtags/:id/follow_hashtags" => "follow_hashtags#destroy", as: "follow_hashtag"
-  get '/posts/hashtag/:tag' => 'posts#hashtag', as: 'hashtag'
+  post "tags/:id/follow_tags" => "follow_tags#create", as: "follow_tags"
+  delete "tags/:id/follow_tags" => "follow_tags#destroy", as: "follow_tag"
+  get '/posts/tag/:tag' => 'posts#tag', as: 'tag'
   get "search" => "search#search"
   resources :users, only: [:show, :edit, :update]
   resources :timelines, only: [:index]
-  resources :posts, only: [:new, :create, :show, :destroy] do
+  resources :posts, only: [:create, :show, :destroy] do
     resource :favorites, only: [:create, :destroy]
     resources :comments, only: [:create, :destroy]
   end

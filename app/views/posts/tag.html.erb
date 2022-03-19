@@ -1,0 +1,8 @@
+<h1>「<%= @tag.name %>」の投稿一覧</h1>
+<% if current_user.followed?(@tag) %>
+  <%= link_to "#{@tag.name}のフォロー解除", follow_tag_path(@tag), method: :delete %>　<!--ハッシュタグのフォロー解除-->
+<%else%>
+  <%= link_to "#{@tag.name}のフォロー", follow_tags_path(@tag), method: :post %>　<!--ハッシュタグのフォロー-->
+<%end %>
+
+<%= render 'posts/posts', posts: @posts %>

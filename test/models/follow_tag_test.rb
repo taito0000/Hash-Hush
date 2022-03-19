@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FollowHashtagTest < ActiveSupport::TestCase
+class FollowTagTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

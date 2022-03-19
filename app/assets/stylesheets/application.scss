@@ -16,24 +16,38 @@
  @import "bootstrap";
  @import 'font-awesome-sprockets';
  @import 'font-awesome';
-
-.profile {
-  display: flex;
-  margin-bottom: 20px;
-}
+ 
+ a {
+  color: black;
+ }
+ 
+ a:hover {
+  color: black;
+  text-decoration: none;
+ }
 
 .header {
   display: flex;
-  background-color: #eeeeee;
+  background-color: #90d3b0;
+}
+
+main {
+  background-color: #daf1e5;
+  background-size: cover;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .navbar {
   position: relative;
 }
 
+.logo {
+  display: flex;
+}
+
 .logo-name {
-  position: absolute;
-	bottom: 0;
+  vertical-align: sub;
 }
 
 .navbar-items {
@@ -42,10 +56,16 @@
 
 .search-form {
   margin: 15px;
+  margin-right: 90px;
+  padding-top: 15px;
 }
 
 .post-btn {
   margin: 15px;
+}
+
+.home-btn {
+  margin-top: 22px;
 }
 
 .dropdown {
@@ -57,22 +77,87 @@
 }
 
 .user-name {
-  position: absolute;
-  bottom: 0;
-  padding: 7px;
-	font-size: 20px;
+  font-weight: 600;
+}
+
+.post-box {
+  padding-top: 20px;  
 }
 
 .post-item {
+  background-color: #ffffff;
   margin-top: 20px;
   border: solid 1px #C0C0C0;
 }
 
-.post-hashtags {
-  background-color: #EEEEEE;
+.post-item:first-child {
+  margin-top: 0px;
+}
+
+.post-user {
+  padding: 10px;
+  font-weight: 600;
+}
+
+.post-created_at {
+  padding: 15px;
   text-align: center;
+}
+
+.post-tags {
+  background-color: #e5ede9;
+  text-align: center;
+  padding: 15px;
+  
 }
 
 .reactions {
   display: flex;
+  text-align: center;
+  padding: 10px;
+}
+
+.heart {
+  color: #FF3333;
+}
+
+.post-destroy-btn {
+  text-align: right;
+}
+
+.profile-box {
+  display: flex;
+  padding-top: 20px;
+}
+
+.user-image {
+  border-radius: 50%;
+}
+
+.user-show-name {
+  font-size: 200%;
+}
+
+.user-show-intros {
+  padding-left: 80px;
+}
+
+.post-show {
+  border: solid 1px #C0C0C0;
+  background-color: #ffffff;
+  margin: 25px auto;
+  border-radius: 2px;
+}
+
+.post-comment-form {
+  margin: 15px auto;
+}
+
+.post-comments {
+  margin-left: 5px;
+}
+
+.post-comment {
+  border-bottom: solid 1px #C0C0C0;
+  padding-top: 10px;
 }

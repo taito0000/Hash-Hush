@@ -1,40 +1,45 @@
 class PostsController < ApplicationController
     
-    def new
-      @new_post = Post.new
-    end
-    
     def create
       @new_post = Post.new(post_params)
       @new_post.user_id = current_user.id
-      @new_post.save
-      redirect_to post_path(@new_post.id)
+      if @new_post.save
+        tag_list = tag_params[:names].split(/[[:blank:]]+/).select(&:present?)
+        @new_post.save_tags(tag_list)
+        redirect_to post_path(@new_post.id)
+      else
+        render 'index'
+      end
     end
     
     def index
-      @posts = Post.joins(:post_hashtags).where(post_hashtags: {hashtag_id: current_user.hashtags.ids}).uniq.order(created_at: :desc)
+      @posts = Post.joins(:post_tags).where(post_tags: {tag_id: current_user.tags.ids}).order(created_at: :desc).uniq
     end
     
     def show
       @post = Post.find(params[:id])
       @comment = Comment.new
-      @hashtags = @post.hashtags
+      @tags = @post.tags
     end
     
-    def hashtag
-      @posts = Hashtag.find_by(name: params[:tag]).posts.order(created_at: :desc)
-      @hashtag = Hashtag.find_by(name: params[:tag])
+    def tag
+      @posts = Tag.find_by(name: params[:tag]).posts.order(created_at: :desc)
+      @tag = Tag.find_by(name: params[:tag])
     end
     
     def destroy
       @post = Post.find(params[:id])
       @post.destroy
-      redirect_to posts_path
+      redirect_to home_path
     end
     
     private
     
     def post_params
-      params.require(:post).permit(:body, :image, :hashbody)
+      params.require(:post).permit(:body, :image, :tagbody)
+    end
+    
+    def tag_params
+      params.require(:post).permit(:names)
     end
 end

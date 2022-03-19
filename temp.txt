@@ -1,0 +1,59 @@
+app/assets/stylesheets/application.scss:71:.post-hashtags {
+app/assets/stylesheets/hashtags.scss:1:// Place all the styles related to the hashtags controller here.
+app/controllers/follow_hashtags_controller.rb:4:    hashtag = Hashtag.find(params[:id])
+app/controllers/follow_hashtags_controller.rb:5:    follow_hashtag = current_user.follow_hashtags.new(hashtag_id: hashtag.id)
+app/controllers/follow_hashtags_controller.rb:6:    follow_hashtag.save
+app/controllers/follow_hashtags_controller.rb:11:    hashtag = Hashtag.find(params[:id])
+app/controllers/follow_hashtags_controller.rb:12:    follow_hashtag = current_user.follow_hashtags.find_by(hashtag_id: hashtag.id)
+app/controllers/follow_hashtags_controller.rb:13:    follow_hashtag.destroy
+app/controllers/posts_controller.rb:15:      @posts = Post.joins(:post_hashtags).where(post_hashtags: {hashtag_id: current_user.hashtags.ids}).uniq.order(created_at: :desc)
+app/controllers/posts_controller.rb:21:      @hashtags = @post.hashtags
+app/controllers/posts_controller.rb:24:    def hashtag
+app/controllers/posts_controller.rb:26:      @hashtag = Hashtag.find_by(name: params[:tag])
+app/controllers/search_controller.rb:4:    @posts = Post.joins(:hashtags).where(hashtags:{ name: "#{params[:keyword]}"}).distinct.order(created_at: :desc)
+app/models/follow_hashtag.rb:3:  belongs_to :hashtag
+app/models/hashtag.rb:3:  has_many :post_hashtags, dependent: :destroy
+app/models/hashtag.rb:4:  has_many :posts, through: :post_hashtags
+app/models/hashtag.rb:5:  has_many :follow_hashtags, dependent: :destroy
+app/models/hashtag.rb:6:  has_many :users, through: :follow_hashtags
+app/models/post.rb:3:    has_many :post_hashtags, dependent: :destroy
+app/models/post.rb:4:    has_many :hashtags, through: :post_hashtags
+app/models/post.rb:15:      hashtags = hashbody.scan(/[#＃][\w\p{Han}ぁ-ヶｦ-ﾟー]+/)
+app/models/post.rb:16:      hashtags.uniq.map do |hashtag|
+app/models/post.rb:17:        tag = Hashtag.find_or_create_by(name: hashtag.downcase.delete('#'))
+app/models/post.rb:18:        post.hashtags << tag
+app/models/post_hashtag.rb:3:  belongs_to :hashtag
+app/models/post_hashtag.rb:5:  validates :hashtag_id, presence: true
+app/models/user.rb:10:  has_many :follow_hashtags, dependent: :destroy
+app/models/user.rb:11:  has_many :hashtags, through: :follow_hashtags
+app/models/user.rb:25:  def followed?(hashtag)
+app/models/user.rb:26:    hashtags.where(id: hashtag.id).exists?
+app/views/posts/_posts.html.erb:9:        <div class="col-6 post-hashtags">
+app/views/posts/_posts.html.erb:11:            <% post.hashtags.each do |hashtag| %>
+app/views/posts/_posts.html.erb:12:              <%= link_to hashtag_path(hashtag.name) do %>
+app/views/posts/_posts.html.erb:13:                <%= hashtag.name %>
+app/views/posts/hashtag.html.erb:1:<h1>#<%= @hashtag.name %>の投稿一覧</h1>
+app/views/posts/hashtag.html.erb:2:<% if current_user.followed?(@hashtag) %>
+app/views/posts/hashtag.html.erb:3:  <%= link_to "##{@hashtag.name}のフォロー解除", follow_hashtag_path(@hashtag), method: :delete %>　<!--ハッシュタグのフォロー解除-->
+app/views/posts/hashtag.html.erb:5:  <%= link_to "##{@hashtag.name}のフォロー", follow_hashtags_path(@hashtag), method: :post %>　<!--ハッシュタグのフォロー-->
+app/views/posts/show.html.erb:8:    <div class="col-6 post-hashtags">
+app/views/posts/show.html.erb:10:        <% @post.hashtags.each do |hashtag| %>
+app/views/posts/show.html.erb:11:          <%= link_to hashtag_path(hashtag.name) do %>
+app/views/posts/show.html.erb:12:            <%= hashtag.name %>
+config/routes.rb:6:  post "hashtags/:id/follow_hashtags" => "follow_hashtags#create", as: "follow_hashtags"
+config/routes.rb:7:  delete "hashtags/:id/follow_hashtags" => "follow_hashtags#destroy", as: "follow_hashtag"
+config/routes.rb:8:  get '/posts/hashtag/:tag' => 'posts#hashtag', as: 'hashtag'
+db/migrate/20220306112023_create_hashtags.rb:3:    create_table :hashtags do |t|
+db/migrate/20220306113240_create_post_hashtags.rb:3:    create_table :post_hashtags do |t|
+db/migrate/20220306113240_create_post_hashtags.rb:5:      t.references :hashtag, foreign_key: true
+db/migrate/20220308111218_create_follow_hashtags.rb:3:    create_table :follow_hashtags do |t|
+db/migrate/20220308111218_create_follow_hashtags.rb:5:      t.integer :hashtag_id
+db/schema.rb:30:  create_table "follow_hashtags", force: :cascade do |t|
+db/schema.rb:32:    t.integer "hashtag_id"
+db/schema.rb:37:  create_table "hashtags", force: :cascade do |t|
+db/schema.rb:43:  create_table "post_hashtags", force: :cascade do |t|
+db/schema.rb:45:    t.integer "hashtag_id"
+db/schema.rb:48:    t.index ["hashtag_id"], name: "index_post_hashtags_on_hashtag_id"
+db/schema.rb:49:    t.index ["post_id"], name: "index_post_hashtags_on_post_id"
+test/fixtures/follow_hashtags.yml:5:  hashtag_id: 1
+test/fixtures/follow_hashtags.yml:9:  hashtag_id: 1
