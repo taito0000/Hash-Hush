@@ -1,81 +1,82 @@
-<h1>投稿詳細・コメント</h1>
-<section class="container post-show">
-  <div class="row post-head">
-    <div class="col post-user">
-      <%= attachment_image_tag @post.user, :profile_image, size: "40x40", format: 'jpeg', fallback: "no_imagesan.png", class: "user-image" %>
-      <%= @post.user.nickname %>
-    </div>
-    <div class="col post-created_at">
-      <%= @post.created_at %>
-    </div>
-    <div class="col-6 post-tags">
-      <p>
-        <% @post.tags.each do |tag| %>
-          <%= link_to tag_path(tag.name) do %>
-            <%= tag.name %>
-          <% end %>
-        <% end %>
-      </p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
-      <p><%= @post.body %></p>
-      <div class="post-image">
-        <%= attachment_image_tag @post, :image, width: '500' %></br>
+<div class="post-box">
+  <section class="container post-item">
+    <div class="row post-head">
+      <div class="col post-user">
+        <%= attachment_image_tag @post.user, :profile_image, size: "40x40", format: 'jpeg', fallback: "no_imagesan.png", class: "user-image" %>
+        <%= @post.user.nickname %>
       </div>
-    </div>
-  </div>
-  <div class="row reactions">
-    <div class="col-3 favorite">
-      <% if @post.favorited_by?(current_user) %>
+      <div class="col post-created_at">
+        <%= @post.created_at %>
+      </div>
+      <div class="col-6 post-tags">
         <span>
-          <%= link_to post_favorites_path(@post), method: :delete do %>
-            <i class="fas fa-heart heart"></i><%= @post.favorites.count %>
+          <% @post.tags.each do |tag| %>
+            <%= link_to tag_path(tag.name) do %>
+              　<%= tag.name %>
+            <% end %>
           <% end %>
         </span>
-        <% else %>
-        <span>
-          <%= link_to post_favorites_path(@post), method: :post do %>
-            <i class="far fa-heart heart"></i><%= @post.favorites.count %> 
-          <% end %>
-        </span>
-      <% end %>
+      </div>
     </div>
-    <div class="col-3 comment">
-      <span>
-        <i class="far fa-comment"></i><%= @post.comments.count  %>
-      </span>
+    <div class="row">
+      <div class="col-12">
+        <p><%= @post.body %></p>
+        <div class="post-image">
+          <%= attachment_image_tag @post, :image, width: '500' %></br>
+        </div>
+      </div>
     </div>
-    <div class="col-6 post-destroy-btn">
-      <% if @post.user == current_user %>
-        <%= link_to post_path(@post), method: :delete do %>
-          <i class="fas fa-trash-alt"></i>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
-</section>
-<div class=" post-comment-zone">
-  <div class="post-comment-form">
-    <%= form_with(model:[@post, @comment], local: true) do |f| %>
-      <%= f.text_field :body, rows:'5',placeholder: "コメントをここに" %>
-      <%= f.submit "送信する" %>
-    <% end %>
-  </div>
-  <div class="post-comments">
-    <% @post.comments.each do |comment| %>
-      <div class="post-comment">
-        <%= attachment_image_tag comment.user, :profile_image, size: "30x30", format: 'jpeg', fallback: "no_imagesan.png", class: "user-image" %>
-        <%= comment.user.name %>
-        <%= comment.created_at.strftime('%Y/%m/%d') %></br>
-        <%= comment.body %>
-        <% if comment.user == current_user %>
-          <div>
-            <%= link_to "削除", post_comment_path(comment.post, comment), method: :delete %>
-          </div>
+    <div class="row reactions">
+      <div class="col-2 favorite">
+        <% if @post.favorited_by?(current_user) %>
+          <span>
+            <%= link_to post_favorites_path(@post), method: :delete do %>
+              <i class="fas fa-heart heart"></i><%= @post.favorites.count %>
+            <% end %>
+          </span>
+          <% else %>
+          <span>
+            <%= link_to post_favorites_path(@post), method: :post do %>
+              <i class="far fa-heart heart"></i><%= @post.favorites.count %> 
+            <% end %>
+          </span>
         <% end %>
       </div>
-    <% end %>
+      <div class="col-3">
+        <span>
+          <i class="far fa-comment"></i><%= @post.comments.count  %>
+        </span>
+      </div>
+      <div class="col-7 post-destroy-btn">
+        <% if @post.user == current_user %>
+          <%= link_to post_path(@post), method: :delete do %>
+            <i class="fas fa-trash-alt"></i>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </section>
+  <div class=" post-comment-zone">
+    <div class="post-comment-form">
+      <%= form_with(model:[@post, @comment], local: true) do |f| %>
+        <%= f.text_field :body, rows:'5',placeholder: "コメントをここに" %>
+        <%= f.submit "送信する" %>
+      <% end %>
+    </div>
+    <div class="post-comments">
+      <% @post.comments.each do |comment| %>
+        <div class="post-comment">
+          <%= attachment_image_tag comment.user, :profile_image, size: "30x30", format: 'jpeg', fallback: "no_imagesan.png", class: "user-image" %>
+          <%= comment.user.name %>
+          <%= comment.created_at.strftime('%Y/%m/%d') %></br>
+          <%= comment.body %>
+          <% if comment.user == current_user %>
+            <div>
+              <%= link_to "削除", post_comment_path(comment.post, comment), method: :delete %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>

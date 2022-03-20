@@ -15,7 +15,7 @@
             <span>
               <% post.tags.each do |tag| %>
                 <%= link_to tag_path(tag.name) do %>
-                  　　<%= tag.name %>
+                  　<%= tag.name %>
                 <% end %>
               <% end %>
             </span>
@@ -24,7 +24,7 @@
         <div class="row">
           <div class="col-12">
             <p><%= post.body %></p>
-            <%= attachment_image_tag post, :image, size: "300x300" %></br>
+            <%= attachment_image_tag post, :image,size: "300x300" %></br>
           </div>
         </div>
         <div class="row reactions">

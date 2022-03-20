@@ -1,2 +1,10 @@
 <h1>「<%= "#{params[:keyword]}" %>」の検索結果</h1>
+<span><%= @posts.count %>件</span>
+<% if @tag.present? %> 
+  <% if current_user.followed?(@tag) %>
+    <%= link_to "#{@tag.name}のフォロー解除", follow_tag_path(@tag), method: :delete %>　<!--ハッシュタグのフォロー解除-->
+  <%else%>
+    <%= link_to "#{@tag.name}のフォロー", follow_tags_path(@tag), method: :post %>　<!--ハッシュタグのフォロー-->
+  <%end %>
+<% end %>
 <%= render 'posts/posts', posts: @posts %>
