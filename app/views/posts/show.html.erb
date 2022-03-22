@@ -61,6 +61,7 @@
       <%= form_with(model:[@post, @comment], local: true) do |f| %>
         <%= f.text_field :body, rows:'5',placeholder: "コメントをここに" %>
         <%= f.submit "送信する" %>
+        <%= flash[:comment_error] %>
       <% end %>
     </div>
     <div class="post-comments">

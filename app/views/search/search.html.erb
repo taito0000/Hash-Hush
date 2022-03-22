@@ -1,10 +1,22 @@
 <h1>「<%= "#{params[:keyword]}" %>」の検索結果</h1>
-<span><%= @posts.count %>件</span>
 <% if @tag.present? %> 
   <% if current_user.followed?(@tag) %>
-    <%= link_to "#{@tag.name}のフォロー解除", follow_tag_path(@tag), method: :delete %>　<!--ハッシュタグのフォロー解除-->
+    <div class="dropdown">
+      <button class="btn dropdown-toggle following-drop btn-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        フォロー中
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">
+          <%= link_to "フォロー解除", follow_tag_path(@tag), method: :delete %>　<!--ハッシュタグのフォロー解除-->
+        </a>
+      </div>
+    </div>
   <%else%>
-    <%= link_to "#{@tag.name}のフォロー", follow_tags_path(@tag), method: :post %>　<!--ハッシュタグのフォロー-->
-  <%end %>
+    <div class="following-tag-follow-btn">
+      <%= link_to "フォローする", follow_tags_path(@tag), method: :post , class: "follow-btn btn btn-white"%>　<!--ハッシュタグのフォロー-->
+    </div>
+  <% end %>
+<% else %>
+  <h2>「<%= "#{params[:keyword]}" %>」というタグは存在しませんでした。</h2>
 <% end %>
 <%= render 'posts/posts', posts: @posts %>

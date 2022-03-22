@@ -17,6 +17,17 @@
  @import 'font-awesome-sprockets';
  @import 'font-awesome';
  
+ .body-container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 95px 1fr;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+}
+ 
  a {
   color: black;
  }
@@ -29,13 +40,17 @@
 .header {
   display: flex;
   background-color: #90d3b0;
+  width: 100%;
+  grid-area: header;
 }
 
 main {
   background-color: #daf1e5;
   background-size: cover;
   width: 100%;
-  min-height: 100vh;
+  flex: 1;
+  overflow-y: scroll;
+  grid-area: main;
 }
 
 .navbar {
@@ -80,20 +95,20 @@ main {
   font-weight: 600;
 }
 
+.tagz {
+  margin: 26px auto 0;
+}
+
 .post-box {
-  padding-top: 20px;  
+  padding-top: 5px;  
 }
 
 .post-item {
   background-color: #ffffff;
   margin-top: 20px;
   border: solid 1px #C0C0C0;
+  border-radius: 3px;
 }
-
-.post-item:first-child {
-  margin-top: 0px;
-}
-
 .post-user {
   padding: 10px;
   font-weight: 600;
@@ -108,7 +123,7 @@ main {
   background-color: #e5ede9;
   text-align: center;
   padding: 15px;
-  
+  border-radius: 2px;
 }
 
 .reactions {
@@ -142,11 +157,12 @@ main {
   padding-left: 80px;
 }
 
-.post-show {
-  border: solid 1px #C0C0C0;
-  background-color: #ffffff;
-  margin: 25px auto;
-  border-radius: 2px;
+.post-count {
+  padding-left: 13px;
+}
+
+.post-comment-zone {
+  padding-top: 5px;
 }
 
 .post-comment-form {
@@ -160,4 +176,62 @@ main {
 .post-comment {
   border-bottom: solid 1px #C0C0C0;
   padding-top: 10px;
+}
+
+.post-form-body {
+  height: 100px;
+}
+
+.top-hello {
+  display: flex;
+  align-items: flex-end;
+}
+
+.top-introduction {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+strong {
+  font-weight: 800;
+  font-size: large;
+}
+
+.top-intro-name {
+  font-weight: 700;
+  font-size: xx-large;
+}
+
+.following-tag {
+  border-bottom: solid 1px #C0C0C0;
+}
+
+.following-tag:first-child {
+  border-top: solid 1px #C0C0C0;
+}
+
+.following-tag-name {
+  padding: 20px;
+}
+
+.following-drop {
+  border: solid 1px #C0C0C0;
+}
+
+.following-tag-follow-btn {
+  margin: 15px;
+}
+
+.follow-btn {
+  border: solid 1px #C0C0C0;
+  border-radius: 0.25rem;
+}
+
+.btn-white {
+  background-color: #ffffff;
+}
+
+footer {
+  grid-area: footer;
 }

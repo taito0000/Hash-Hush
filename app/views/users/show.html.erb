@@ -4,13 +4,75 @@
     <%= attachment_image_tag @user, :profile_image, size: "180x180", format: 'jpeg', fallback: "no_imagesan.png", class: "user-image" %>
   </div>
   
-  <div class="col-8 profile-intros">
+  <div class="col-4 profile-intros">
     <div class="container">
       <div class="row">
         <p class="user-show-name"><%= @user.nickname %></p>
       </div>
       <div class="row">
         <p><%= @user.introduction %></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-4">
+    <div class="container">
+      <div class="row">
+        <!-- Button trigger modal -->
+        <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalLong">
+          フォロー中のタグ<%= @user.tags.count %>個
+        </button>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">フォロー中のタグ一覧</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <% @user.tags.each do |tag| %>
+                  <div class="row following-tag">
+                    <span class="col following-tag-name">
+                      <%= link_to tag_path(tag.name) do %>
+                        　<%= tag.name %>
+                      <% end %>
+                    </span>
+                    <span class="col">
+                      <% if current_user.followed?(tag) %>
+                        <div class="dropdown">
+                          <button class="btn dropdown-toggle following-drop" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            フォロー中
+                          </button>
+                          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">
+                              <%= link_to "フォロー解除", follow_tag_path(tag), method: :delete %>　<!--ハッシュタグのフォロー解除-->
+                            </a>
+                          </div>
+                        </div>
+                      <%else%>
+                        <div class="following-tag-follow-btn">
+                          <%= link_to "フォローする", follow_tags_path(tag), method: :post , class: "follow-btn btn"%>　<!--ハッシュタグのフォロー-->
+                        </div>
+                      <% end %>
+                    </span>
+                  </div>
+                <% end %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row post-count">
+        <span>
+          投稿<%= @user.posts.count %>件
+        </span>
       </div>
     </div>
   </div>

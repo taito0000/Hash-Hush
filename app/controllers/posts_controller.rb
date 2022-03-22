@@ -3,12 +3,13 @@ class PostsController < ApplicationController
     def create
       @new_post = Post.new(post_params)
       @new_post.user_id = current_user.id
-      if @new_post.save
-        tag_list = tag_params[:names].split(/[[:blank:]]+/).select(&:present?)
+      tag_list = tag_params[:names].split(/[[:blank:]]+/).select(&:present?)
+      if (tag_list.length > 0) && @new_post.save
         @new_post.save_tags(tag_list)
         redirect_to post_path(@new_post.id)
       else
-        render 'index'
+        redirect_to request.referer
+        flash[:"alert-danger"] = "タグの入力は必須です"
       end
     end
     
