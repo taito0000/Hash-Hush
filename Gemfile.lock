@@ -1,5 +1,5 @@
 GIT
-  remote: git://github.com/manfe/refile.git
+  remote: https://github.com/manfe/refile.git
   revision: 46b4178654e60bb5846b1423acf6d0740cdecc25
   specs:
     refile (0.6.2)
@@ -227,7 +227,7 @@ GEM
       execjs (>= 0.3.0, < 3)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.8)
+    unf_ext (0.0.8.1)
     warden (1.2.9)
       rack (>= 2.0.9)
     web-console (3.7.0)
