@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'home' => "posts#index"
   post "tags/:id/follow_tags" => "follow_tags#create", as: "follow_tags"
   delete "tags/:id/follow_tags" => "follow_tags#destroy", as: "follow_tag"
+  get "tags/ranking" => "tags#rank"
   get '/posts/tag/:tag' => 'posts#tag', as: 'tag'
   get "search" => "search#search"
   resources :users, only: [:show, :edit, :update]

@@ -15,6 +15,7 @@ class PostsController < ApplicationController
     
     def index
       @posts = Post.joins(:post_tags).where(post_tags: {tag_id: current_user.tags.ids}).order(created_at: :desc).uniq
+      @tag_post_ranks = Tag.find(PostTag.group(:tag_id).order('count(tag_id)desc').limit(5).pluck(:tag_id))
     end
     
     def show

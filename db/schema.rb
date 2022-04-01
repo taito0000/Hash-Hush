@@ -32,8 +32,6 @@ ActiveRecord::Schema.define(version: 2022_03_15_105400) do
     t.integer "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["tag_id"], name: "index_follow_tags_on_tag_id"
-    t.index ["user_id"], name: "index_follow_tags_on_user_id"
   end
 
   create_table "post_tags", force: :cascade do |t|
@@ -41,8 +39,6 @@ ActiveRecord::Schema.define(version: 2022_03_15_105400) do
     t.integer "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["post_id"], name: "index_post_tags_on_post_id"
-    t.index ["tag_id"], name: "index_post_tags_on_tag_id"
   end
 
   create_table "posts", force: :cascade do |t|
