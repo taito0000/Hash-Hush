@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
     
+    before_action :baria_post, only: [:destroy]
+    
     def create
       @new_post = Post.new(post_params)
       @new_post.user_id = current_user.id
@@ -43,5 +45,12 @@ class PostsController < ApplicationController
     
     def tag_params
       params.require(:post).permit(:names)
+    end
+    
+    def baria_post
+      unless Post.find(public[:id]).user.id.to_i == current_user.id
+        flash[:notice] = "権限がありません"
+        redirect_to home_path
+      end
     end
 end
