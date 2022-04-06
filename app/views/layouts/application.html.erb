@@ -16,7 +16,7 @@
             <div class="container">
               <div class="navbar-brand logo">
                 <span class="logo-icon"><%= image_tag'logobean.png', size: '60x60' %></span>
-                <span class="logo-name"><h2 class="tagz">Tagren</h2></span>
+                <span class="logo-name"><h2 class="tagren">Tagren</h2></span>
               </div>
               <div class="navbar-items">
                 <% if user_signed_in? %>
@@ -29,6 +29,11 @@
                   <div class="home-btn">
                     <%= link_to home_path do %>
                       <i class="fas fa-home fa-2x"></i>
+                    <% end %>
+                  </div>
+                  <div class="tags-btn">
+                    <%= link_to tags_path do %>
+                      <i class="fas fa-tags fa-lg"></i>
                     <% end %>
                   </div>
                   <div class="post-btn">
@@ -50,7 +55,7 @@
                           <%= form_with model: Post.new, local:true do |f| %>
                             <div class="modal-body">
                               <h4>なんの話する？</h4>
-                              <%= f.text_field :names, placeholder: "タグを入力" %>
+                              <%= f.text_field :names, placeholder: "タグを入力" %><span>スペースで複数のタグを設定可能です</span>
                               <%= f.text_field :body, size: "40", placeholder: "キャプションを入力", class: "post-form-body" %>
                               <h4>画像</h4>
                               <%= f.attachment_field :image %>

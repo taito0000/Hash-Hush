@@ -1,6 +1,35 @@
-<div>
-  <% @tag_ranks.each.with_index(1) do |tag,i| %>
-    <div class="rank-tag-num">第<%= i %>位 </div> 
-      <div class="rank-tag"><%= tag.name%></div>
-    <% end %>
-</div>
+<div class="container">
+    <h3>投稿の多いタグランキング</h3>
+    <table>
+      <% @tag_post_ranks.each.with_index(1) do |tag,i| %>
+        <tr>
+          <th class="rank-tag-num">
+            第<%= i %>位
+          </th>
+          <td>
+            <%= link_to tag_path(tag.name) do %>
+              <div class="rank-tag"><%= tag.name%></div>
+            <% end %>
+          </td>
+          <td>
+            <% if current_user.followed?(tag) %>
+              <div class="dropdown">
+                <button class="btn dropdown-toggle following-drop btn-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  フォロー中
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">
+                    <%= link_to "フォロー解除", follow_tag_path(tag), method: :delete %>　<!--ハッシュタグのフォロー解除-->
+                  </a>
+                </div>
+              </div>
+            <%else%>
+              <div class="following-tag-follow-btn">
+                <%= link_to "フォローする", follow_tags_path(tag), method: :post , class: "follow-btn btn btn-white"%>　<!--ハッシュタグのフォロー-->
+              </div>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>

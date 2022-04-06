@@ -5,11 +5,11 @@ Rails.application.routes.draw do
   get 'home' => "posts#index"
   post "tags/:id/follow_tags" => "follow_tags#create", as: "follow_tags"
   delete "tags/:id/follow_tags" => "follow_tags#destroy", as: "follow_tag"
-  get "tags/ranking" => "tags#rank"
+  get "tags/ranking" => "tags#rank", as: "tags_rank"
   get '/posts/tag/:tag' => 'posts#tag', as: 'tag'
   get "search" => "search#search"
   resources :users, only: [:show, :edit, :update]
-  resources :timelines, only: [:index]
+  resources :tags, only: [:index]
   resources :posts, only: [:create, :show, :destroy] do
     resource :favorites, only: [:create, :destroy]
     resources :comments, only: [:create, :destroy]
