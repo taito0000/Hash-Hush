@@ -113,6 +113,13 @@ main {
   border: solid 1px #C0C0C0;
   border-radius: 3px;
 }
+
+.thumb_300{
+		width: 300px;
+		height: 300px;
+		object-fit: cover; // or contain
+}
+	
 .post-user {
   padding: 10px;
   font-weight: 600;
